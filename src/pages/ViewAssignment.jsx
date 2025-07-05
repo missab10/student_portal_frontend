@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import DecryptedText from '../components/DecryptedText';
 
 const ViewAssignments = () => {
   const [assignments, setAssignments] = useState([]);
@@ -47,7 +48,16 @@ const ViewAssignments = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
             </svg>
           </div>
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">Your Assignments</h2>
+
+          {/* Example 3: Animate on view (runs once) */}
+<div style={{ marginTop: '4rem' }}>
+<DecryptedText
+className="text-3xl font-bold text-gray-900 mb-2"
+  text="Your Assignments"
+  animateOn="view"
+  revealDirection="center"
+/>
+</div>
           <p className="text-gray-600 text-sm">View all your submitted assignments</p>
         </div>
 
@@ -111,6 +121,11 @@ const ViewAssignments = () => {
           </button>
         </div>
       </div>
+
+
+
+
+
     </div>
   );
 };
