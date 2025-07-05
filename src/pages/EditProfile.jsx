@@ -100,29 +100,29 @@ const EditProfile = () => {
 
   if (!student) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center p-6">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-coral-500"></div>
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 p-4 sm:p-6">
+    <div className="min-h-screen bg-gray-100 p-4 sm:p-6">
       <div className="max-w-2xl mx-auto">
-        <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl p-8 border border-gray-200/30">
+        <div className="bg-white rounded-lg shadow-lg p-8 border border-gray-200">
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-gradient-to-r from-coral-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
               <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
               </svg>
             </div>
-            <h2 className="text-3xl font-bold text-navy-900 mb-2">Edit Profile</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-2">Edit Profile</h2>
             <p className="text-gray-600 text-sm">Update your account information</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Personal Information Section */}
-            <div className="bg-gray-50 rounded-xl p-6">
+            <div className="bg-gray-50 rounded-lg p-6">
               <h3 className="text-lg font-semibold text-gray-800 mb-4">Personal Information</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
@@ -133,7 +133,7 @@ const EditProfile = () => {
                     value={formData.fullName}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl bg-white/50 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-transparent transition-all duration-300"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
                   />
                 </div>
                 <div>
@@ -144,7 +144,7 @@ const EditProfile = () => {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl bg-white/50 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-transparent transition-all duration-300"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
                   />
                 </div>
                 <div>
@@ -155,7 +155,7 @@ const EditProfile = () => {
                     value={formData.age}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl bg-white/50 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-transparent transition-all duration-300"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
                   />
                 </div>
                 <div>
@@ -166,14 +166,14 @@ const EditProfile = () => {
                     value={formData.phoneNumber}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl bg-white/50 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-transparent transition-all duration-300"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
                   />
                 </div>
               </div>
             </div>
 
             {/* Password Change Section */}
-            <div className="bg-gray-50 rounded-xl p-6">
+            <div className="bg-gray-50 rounded-lg p-6">
               <h3 className="text-lg font-semibold text-gray-800 mb-4">Change Password (Optional)</h3>
               <div className="space-y-4">
                 <div>
@@ -184,7 +184,7 @@ const EditProfile = () => {
                     value={formData.currentPassword}
                     onChange={handleChange}
                     placeholder="Enter current password to change"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl bg-white/50 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-transparent transition-all duration-300"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
                   />
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -196,7 +196,7 @@ const EditProfile = () => {
                       value={formData.newPassword}
                       onChange={handleChange}
                       placeholder="Enter new password"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl bg-white/50 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-transparent transition-all duration-300"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
                     />
                   </div>
                   <div>
@@ -207,7 +207,7 @@ const EditProfile = () => {
                       value={formData.confirmPassword}
                       onChange={handleChange}
                       placeholder="Confirm new password"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl bg-white/50 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-transparent transition-all duration-300"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
                     />
                   </div>
                 </div>
@@ -219,14 +219,14 @@ const EditProfile = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="flex-1 bg-gradient-to-r from-coral-500 to-red-500 text-white py-3 rounded-xl font-semibold text-lg shadow-md hover:from-coral-600 hover:to-red-600 transform hover:scale-105 transition-all duration-300 focus:ring-2 focus:ring-coral-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex-1 bg-blue-600 text-white py-3 rounded-lg font-semibold text-lg shadow-md hover:bg-blue-700 transition-all duration-300 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? 'Updating...' : 'Update Profile'}
               </button>
               <button
                 type="button"
                 onClick={() => navigate('/profile')}
-                className="flex-1 bg-gray-500 text-white py-3 rounded-xl font-semibold text-lg shadow-md hover:bg-gray-600 transform hover:scale-105 transition-all duration-300 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+                className="flex-1 bg-gray-500 text-white py-3 rounded-lg font-semibold text-lg shadow-md hover:bg-gray-600 transition-all duration-300 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
               >
                 Cancel
               </button>
@@ -235,7 +235,7 @@ const EditProfile = () => {
 
           {message && (
             <div
-              className={`mt-6 p-4 rounded-xl text-center font-medium ${
+              className={`mt-6 p-4 rounded-lg text-center font-medium ${
                 message.includes('failed') || message.includes('error') || message.includes('incorrect') || message.includes('match')
                   ? 'bg-red-50 text-red-700 border border-red-200'
                   : 'bg-green-50 text-green-700 border border-green-200'
