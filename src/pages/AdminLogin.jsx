@@ -24,114 +24,48 @@ const AdminLogin = () => {
   };
 
   return (
-    <>
-      <style>
-        {`
-          .admin-login-container {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #f0f2f5;
-            background: linear-gradient(135deg, #f0f2f5 0%, #e0e7ff 100%);
-          }
-          .form-container {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            width: 100%;
-            max-width: 400px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-          }
-          .form-container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-          }
-          .form-title {
-            font-size: 1.75rem;
-            font-weight: bold;
-            text-align: center;
-            color: #4b0082;
-            margin-bottom: 1.5rem;
-          }
-          .form-group {
-            margin-bottom: 1.25rem;
-          }
-          .form-input {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-          }
-          .form-input:focus {
-            border-color: #4b0082;
-            box-shadow: 0 0 0 3px rgba(75, 0, 130, 0.2);
-          }
-          .submit-button {
-            width: 100%;
-            padding: 0.75rem;
-            background-color: #4b0082;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-          }
-          .submit-button:hover {
-            background-color: #6a0dad;
-            transform: translateY(-2px);
-          }
-          .submit-button:active {
-            transform: translateY(0);
-          }
-          .message {
-            margin-top: 1rem;
-            text-align: center;
-            color: #dc3545;
-            font-size: 0.9rem;
-          }
-        `}
-      </style>
-      <div className="admin-login-container">
-        <div className="form-container">
-          <h2 className="form-title">Admin Login</h2>
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <input
-                type="email"
-                name="email"
-                placeholder="Admin Email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                className="form-input"
-              />
-            </div>
-            <div className="form-group">
-              <input
-                type="password"
-                name="password"
-                placeholder="Admin Password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-                className="form-input"
-              />
-            </div>
-            <button type="submit" className="submit-button">
-              Login
-            </button>
-          </form>
-          {message && <p className="message">{message}</p>}
-        </div>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm border border-gray-200">
+        <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
+          Admin Login
+        </h2>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-5">
+            <input
+              type="email"
+              name="email"
+              placeholder="Admin Email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border border-gray-300 rounded text-base outline-none transition-colors focus:border-blue-500"
+            />
+          </div>
+          <div className="mb-5">
+            <input
+              type="password"
+              name="password"
+              placeholder="Admin Password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border border-gray-300 rounded text-base outline-none transition-colors focus:border-blue-500"
+            />
+          </div>
+          <button 
+            type="submit" 
+            className="w-full p-3 bg-blue-600 text-white rounded text-base font-medium cursor-pointer transition-colors hover:bg-blue-700"
+          >
+            Login
+          </button>
+        </form>
+        {message && (
+          <p className="mt-4 text-center text-red-600 text-sm">
+            {message}
+          </p>
+        )}
       </div>
-    </>
+    </div>
   );
 };
 

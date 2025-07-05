@@ -9,6 +9,10 @@ const ViewUsers = () => {
   const navigate = useNavigate();
   const isAdmin = localStorage.getItem('isAdmin');
 
+
+const sampleItems = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6', 'Item 7', 'Item 8', 'Item 9', 'Item 10'];
+
+
   useEffect(() => {
     if (!isAdmin) {
       setMessage('You must be logged in as an admin to view this page');
@@ -117,6 +121,7 @@ const ViewUsers = () => {
                           className="text-red-500 hover:text-red-700"
                           title="Delete User"
                         >
+                          
                           <img className='w-5 h-5 hover:scale-110 transition-transform duration-200 cursor-pointer' src={deleteIcon} alt="delete" />
                         </button>
                       </td>
@@ -144,6 +149,7 @@ const ViewUsers = () => {
           </button>
         </div>
       </div>
+
     </div>
   );
 };
