@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import DecryptedText from '../components/DecryptedText';
 
 const AddAssignment = () => {
   const [formData, setFormData] = useState({ title: '', description: '' });
@@ -59,7 +60,15 @@ const AddAssignment = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
           </div>
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">Add Assignment</h2>
+          {/* <h2 className="text-3xl font-bold text-gray-900 mb-2">Add Assignment</h2> */}
+          <div style={{ marginTop: '4rem' }}>
+<DecryptedText
+className="text-3xl font-bold text-gray-900 mb-2"
+  text="Add Assignment"
+  animateOn="view"
+  revealDirection="center"
+/>
+</div>
           <p className="text-gray-600 text-sm">Submit your assignment details</p>
         </div>
 

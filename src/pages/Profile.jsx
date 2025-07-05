@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import DecryptedText from '../components/DecryptedText';
 
 const Profile = () => {
   const [student, setStudent] = useState(null);
@@ -58,7 +59,15 @@ const Profile = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
           </div>
-          <h2 className="text-3xl font-extrabold text-gray-900">Student Profile</h2>
+          {/* <h2 className="text-3xl font-extrabold text-gray-900">Student Profile</h2> */}
+          <div style={{ marginTop: '4rem' }}>
+<DecryptedText
+className="text-3xl font-extrabold text-gray-900"
+  text="Student Profile"
+  animateOn="view"
+  revealDirection="center"
+/>
+</div>
           <p className="text-gray-500 mt-2">Your account details</p>
         </div>
         <div className="space-y-4 text-gray-700 bg-gray-50 rounded-lg p-6 shadow-inner">

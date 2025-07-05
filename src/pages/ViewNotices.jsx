@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import DecryptedText from '../components/DecryptedText';
 
 const ViewNotices = () => {
   const [notices, setNotices] = useState([]);
@@ -117,9 +118,17 @@ const ViewNotices = () => {
           <div className="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
             <span className="text-2xl">📋</span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Latest Notices
-          </h1>
+            {/* <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              Latest Notices
+            </h1> */}
+          <div style={{ marginTop: '4rem' }}>
+<DecryptedText
+className="text-4xl md:text-5xl font-bold text-gray-900 mb-4"
+  text="Latest Notices"
+  animateOn="view"
+  revealDirection="center"
+/>
+</div>
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
             Stay updated with the latest announcements and important information
           </p>
