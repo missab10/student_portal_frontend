@@ -1,17 +1,15 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import deleteIcon from '../assets/delete.png';
+import { Shield, Trash2, Loader } from 'lucide-react';
+import DecryptedText from '../components/DecryptedText';
+import Buttonn from '../components/Buttonn';
 const ViewUsers = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
   const isAdmin = localStorage.getItem('isAdmin');
-
-
-const sampleItems = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6', 'Item 7', 'Item 8', 'Item 9', 'Item 10'];
-
 
   useEffect(() => {
     if (!isAdmin) {
@@ -57,24 +55,27 @@ const sampleItems = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6',
   };
   
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-start p-6 sm:p-8 lg:p-12">
-      <div className="w-full max-w-5xl bg-white rounded-lg shadow-lg p-8 lg:p-10">
+    <div className="min-h-screen bg-gradient-to-b from-slate-900 to-blue-900 flex flex-col items-center justify-start p-4 sm:p-6 lg:p-8 lg:ml-64 transition-all duration-300">
+      <div className="w-full max-w-5xl bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-8 lg:p-10 border border-white/20">
         <div className="text-center mb-10">
-          <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.5v15m7.5-7.5h-15" />
-            </svg>
+          <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+            <Shield className="w-8 h-8 text-white" />
           </div>
-          <h1 className="text-4xl font-extrabold text-gray-900 mb-3">Registered Students</h1>
-          <p className="text-gray-500 text-base">View all registered students</p>
+          <DecryptedText
+            className="text-4xl font-extrabold text-white bg-clip-text bg-gradient-to-r from-white to-blue-200"
+            text="Registered Students"
+            animateOn="view"
+            revealDirection="center"
+          />
+          <p className="text-blue-200 text-base mt-2 opacity-75">View all registered students</p>
         </div>
 
         {loading ? (
           <div className="flex justify-center items-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-600"></div>
+            <Loader className="animate-spin h-12 w-12 text-blue-400" />
           </div>
         ) : users.length === 0 ? (
-          <p className="text-center text-gray-500 text-lg font-medium">No users found.</p>
+          <p className="text-center text-blue-200 text-lg font-medium opacity-75">No users found.</p>
         ) : (
           <>
             {/* Mobile: Card Layout */}
@@ -82,23 +83,30 @@ const sampleItems = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6',
               {users.map((user) => (
                 <div
                   key={user._id}
-                  className="bg-white border border-gray-200 rounded-lg p-6 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
+                  className="bg-white/5 border border-white/20 rounded-xl p-6 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
                 >
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">{user.fullName}</h3>
-                  <p className="text-gray-600 text-sm mb-2">
+                  <h3 className="text-xl font-semibold text-white mb-2">{user.fullName}</h3>
+                  <p className="text-gray-300 text-sm mb-2">
                     <span className="font-medium">Email:</span> {user.email}
                   </p>
-                  <p className="text-gray-600 text-sm">
+                  <p className="text-gray-300 text-sm mb-4">
                     <span className="font-medium">Registered:</span>{' '}
                     {new Date(user.createdAt).toLocaleString()}
                   </p>
+                  <button
+                    onClick={() => handleDelete(user._id)}
+                    className="text-red-400 hover:text-red-300 hover:scale-110 transition-all duration-200"
+                    title="Delete User"
+                  >
+                    <Trash2 className="w-5 h-5" />
+                  </button>
                 </div>
               ))}
             </div>
             {/* Desktop: Table Layout */}
             <div className="hidden md:block overflow-x-auto">
-              <table className="w-full table-auto border border-gray-200 rounded-lg">
-                <thead className="bg-blue-100 text-blue-900 font-semibold">
+              <table className="w-full table-auto border border-white/20 rounded-xl">
+                <thead className="bg-white/10 text-blue-200 font-semibold">
                   <tr>
                     <th className="p-4 text-left">Name</th>
                     <th className="p-4 text-left">Email</th>
@@ -110,19 +118,18 @@ const sampleItems = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6',
                   {users.map((user) => (
                     <tr
                       key={user._id}
-                      className="border-t border-gray-200 hover:bg-blue-50 transition-colors duration-200"
+                      className="border-t border-white/20 hover:bg-white/5 transition-colors duration-200"
                     >
-                      <td className="p-4">{user.fullName}</td>
-                      <td className="p-4">{user.email}</td>
-                      <td className="p-4">{new Date(user.createdAt).toLocaleString()}</td>
+                      <td className="p-4 text-white">{user.fullName}</td>
+                      <td className="p-4 text-gray-300">{user.email}</td>
+                      <td className="p-4 text-gray-300">{new Date(user.createdAt).toLocaleString()}</td>
                       <td className="p-4">
                         <button
                           onClick={() => handleDelete(user._id)}
-                          className="text-red-500 hover:text-red-700"
+                          className="text-red-400 hover:text-red-300 hover:scale-110 transition-all duration-200"
                           title="Delete User"
                         >
-                          
-                          <img className='w-5 h-5 hover:scale-110 transition-transform duration-200 cursor-pointer' src={deleteIcon} alt="delete" />
+                          <Trash2 className="w-5 h-5" />
                         </button>
                       </td>
                     </tr>
@@ -133,23 +140,22 @@ const sampleItems = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6',
           </>
         )}
         {message && (
-          <div className="mt-8 bg-red-50 border border-red-200 text-red-600 text-center rounded-lg p-4 font-medium">
+          <div className="mt-8 bg-red-500/20 border border-red-500/30 text-red-200 text-center rounded-xl p-4 font-medium">
             {message}
           </div>
         )}
         <div className="mt-8 flex justify-center">
-          <button
+          <Buttonn
             onClick={handleBackToAdminHome}
-            className="flex items-center justify-center gap-2 bg-blue-600 text-white py-3 px-8 rounded-lg font-semibold shadow-md hover:bg-blue-700 transition-all duration-300 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-8 rounded-xl font-semibold shadow-lg hover:from-blue-500 hover:to-purple-500 transition-all duration-300 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
             Back to Admin Home
-          </button>
+          </Buttonn>
         </div>
       </div>
-
     </div>
   );
 };

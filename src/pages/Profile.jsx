@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { User, Mail, Hash, Phone, Calendar, Edit, Loader } from 'lucide-react';
 import DecryptedText from '../components/DecryptedText';
+import Buttonn from '../components/Buttonn';
 
 const Profile = () => {
   const [student, setStudent] = useState(null);
@@ -33,8 +34,8 @@ const Profile = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
-        <div className="text-center bg-red-50 border border-red-200 text-red-600 rounded-lg p-4 font-medium shadow-md">
+      <div className="min-h-screen bg-gradient-to-b from-slate-900 to-blue-900 flex items-center justify-center p-4 sm:p-6 lg:ml-64 transition-all duration-300">
+        <div className="text-center bg-red-500/20 border border-red-500/30 text-red-200 rounded-xl p-4 font-medium shadow-lg max-w-md w-full">
           {error}
         </div>
       </div>
@@ -43,62 +44,60 @@ const Profile = () => {
 
   if (!student) {
     return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
+      <div className="min-h-screen bg-gradient-to-b from-slate-900 to-blue-900 flex items-center justify-center p-4 sm:p-6 lg:ml-64 transition-all duration-300">
         <div className="flex justify-center items-center py-12">
-          <Loader className="animate-spin h-12 w-12 text-blue-500" />
+          <Loader className="animate-spin h-12 w-12 text-blue-400" />
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6 sm:p-8 lg:p-12">
-      <div className="w-full max-w-lg bg-white rounded-lg shadow-lg p-8 border border-gray-200">
+    <div className="min-h-screen bg-gradient-to-b from-slate-900 to-blue-900 flex items-center justify-center p-4 sm:p-6 lg:p-8 lg:ml-64 transition-all duration-300">
+      <div className="w-full max-w-lg bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-8 border border-white/20">
         <div className="text-center mb-8">
-          <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+          <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
             <User className="w-10 h-10 text-white" />
           </div>
-          <div style={{ marginTop: '4rem' }}>
-            <DecryptedText
-              className="text-3xl font-extrabold text-gray-900"
-              text="Student Profile"
-              animateOn="view"
-              revealDirection="center"
-            />
-          </div>
-          <p className="text-gray-500 mt-2">Your account details</p>
+          <DecryptedText
+            className="text-3xl font-extrabold text-white bg-clip-text bg-gradient-to-r from-white to-blue-200"
+            text="Student Profile"
+            animateOn="view"
+            revealDirection="center"
+          />
+          <p className="text-blue-200 mt-2 text-sm opacity-75">Your account details</p>
         </div>
-        <div className="space-y-4 text-gray-700 bg-gray-50 rounded-lg p-6 shadow-inner">
+        <div className="space-y-4 text-gray-300 bg-white/5 rounded-xl p-6 shadow-inner border border-white/20">
           <div className="flex items-center gap-3">
-            <User className="w-5 h-5 text-blue-600" />
+            <User className="w-5 h-5 text-blue-400" />
             <p><strong>Name:</strong> {student.fullName}</p>
           </div>
           <div className="flex items-center gap-3">
-            <Mail className="w-5 h-5 text-blue-600" />
+            <Mail className="w-5 h-5 text-blue-400" />
             <p><strong>Email:</strong> {student.email}</p>
           </div>
           <div className="flex items-center gap-3">
-            <Hash className="w-5 h-5 text-blue-600" />
+            <Hash className="w-5 h-5 text-blue-400" />
             <p><strong>Age:</strong> {student.age}</p>
           </div>
           <div className="flex items-center gap-3">
-            <Phone className="w-5 h-5 text-blue-600" />
+            <Phone className="w-5 h-5 text-blue-400" />
             <p><strong>Phone Number:</strong> {student.phoneNumber}</p>
           </div>
           <div className="flex items-center gap-3">
-            <Calendar className="w-5 h-5 text-blue-600" />
+            <Calendar className="w-5 h-5 text-blue-400" />
             <p><strong>Registered On:</strong> {new Date(student.createdAt).toLocaleString()}</p>
           </div>
         </div>
         <div className="mt-8 flex justify-center">
-          <button
+          <Buttonn
             onClick={() => navigate('/edit-profile')}
-            className="flex items-center gap-2 bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold shadow-md hover:bg-blue-700 transition-all duration-300 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-6 rounded-xl font-semibold shadow-lg hover:from-blue-500 hover:to-purple-500 transition-all duration-300 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900"
             aria-label="Edit Profile"
           >
             <Edit className="w-5 h-5" />
             Edit Profile
-          </button>
+          </Buttonn>
         </div>
       </div>
     </div>

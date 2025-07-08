@@ -12,11 +12,13 @@ import Profile from './pages/Profile';
 import EditProfile from './pages/EditProfile';
 import AddNotice from './pages/AddNotice';
 import ViewNotices from './pages/ViewNotices';
+import SplashCursor from './components/SplashCursor';
 
 import NoticeListAdmin from './pages/NoticeListAdmin';
 function App() {
   return (
     <Router>
+      <SplashCursor/>
       <Navbar/>
       <Routes>
         <Route path="/" element={<Login />} />

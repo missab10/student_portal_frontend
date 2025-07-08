@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import DecryptedText from '../components/DecryptedText';
+import Buttonn from '../components/Buttonn';
 
 const AddAssignment = () => {
   const [formData, setFormData] = useState({ title: '', description: '' });
@@ -52,24 +53,21 @@ const AddAssignment = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4 sm:p-6">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8 border border-gray-200">
+    <div className="min-h-screen bg-gradient-to-b from-slate-900 to-blue-900 flex items-center justify-center p-4 sm:p-6 lg:ml-64 transition-all duration-300">
+      <div className="w-full max-w-lg bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-8 border border-white/20">
         <div className="text-center mb-8">
-          <div className="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
             <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
           </div>
-          {/* <h2 className="text-3xl font-bold text-gray-900 mb-2">Add Assignment</h2> */}
-          <div style={{ marginTop: '4rem' }}>
-<DecryptedText
-className="text-3xl font-bold text-gray-900 mb-2"
-  text="Add Assignment"
-  animateOn="view"
-  revealDirection="center"
-/>
-</div>
-          <p className="text-gray-600 text-sm">Submit your assignment details</p>
+          <DecryptedText
+            className="text-3xl font-bold text-white bg-clip-text bg-gradient-to-r from-white to-blue-200"
+            text="Add Assignment"
+            animateOn="view"
+            revealDirection="center"
+          />
+          <p className="text-blue-200 text-sm mt-2 opacity-75">Submit your assignment details</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -81,7 +79,7 @@ className="text-3xl font-bold text-gray-900 mb-2"
               value={formData.title}
               onChange={handleChange}
               required
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+              className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
             />
             <div className="absolute inset-y-0 right-0 flex items-center pr-3">
               <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -96,7 +94,7 @@ className="text-3xl font-bold text-gray-900 mb-2"
               placeholder="Description (optional)"
               value={formData.description}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 resize-vertical min-h-[100px]"
+              className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 resize-vertical min-h-[120px]"
             />
             <div className="absolute top-3 right-0 flex items-center pr-3">
               <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -111,7 +109,7 @@ className="text-3xl font-bold text-gray-900 mb-2"
               accept="application/pdf"
               onChange={handleFileChange}
               required
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-blue-50 file:text-blue-700 file:font-medium hover:file:bg-blue-100"
+              className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-blue-600 file:text-white file:font-medium hover:file:bg-blue-700"
             />
             <div className="absolute inset-y-0 right-0 flex items-center pr-3">
               <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -119,21 +117,25 @@ className="text-3xl font-bold text-gray-900 mb-2"
               </svg>
             </div>
           </div>
-
-          <button
+<div className='flex justify-center'>
+<Buttonn
             type="submit"
-            className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold text-lg shadow-md hover:bg-blue-700 transition-all duration-300 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="w-auto bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-xl font-semibold text-lg shadow-lg hover:from-blue-500 hover:to-purple-500 transition-all duration-300 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900"
           >
             Submit Assignment
-          </button>
+          </Buttonn>
+
+</div>
+          
+
         </form>
 
         {message && (
           <div
-            className={`mt-6 p-4 rounded-lg text-center font-medium ${
+            className={`mt-6 p-4 rounded-xl text-center font-medium ${
               message.includes('failed') || message.includes('upload') || message.includes('logged in')
-                ? 'bg-red-50 text-red-700 border border-red-200'
-                : 'bg-green-50 text-green-700 border border-green-200'
+                ? 'bg-red-500/20 text-red-200 border border-red-500/30'
+                : 'bg-green-500/20 text-green-200 border border-green-500/30'
             }`}
           >
             {message}
