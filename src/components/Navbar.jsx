@@ -227,7 +227,7 @@ const Navbar = () => {
                   {settings.map((setting) => (
                     <li key={setting}>
                       <Link
-                        to={setting.toLowerCase()}
+                          to={setting === 'Logout' ? '/': setting.toLowerCase()}
                         className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-blue-50 transition-all duration-200 group"
                         onClick={() => {
                           setIsSidebarOpen(false);
