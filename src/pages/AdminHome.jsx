@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import deleteIcon from '../assets/delete.png';
+import { Shield, FileText, Trash2, Loader, Send } from 'lucide-react';
 
 const AdminHome = () => {
   const [assignments, setAssignments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState('');
+  const [remarkStates, setRemarkStates] = useState({});
+  const [submittingRemarks, setSubmittingRemarks] = useState({});
   const navigate = useNavigate();
   const isAdmin = localStorage.getItem('isAdmin');
 
@@ -21,6 +23,13 @@ const AdminHome = () => {
       try {
         const res = await axios.get('http://localhost:5000/api/admin/assignments');
         setAssignments(res.data);
+        
+        // Initialize remark states
+        const initialRemarkStates = {};
+        res.data.forEach(assignment => {
+          initialRemarkStates[assignment._id] = assignment.remarks || '';
+        });
+        setRemarkStates(initialRemarkStates);
       } catch (error) {
         console.error('Error fetching assignments:', error);
         setMessage('Failed to fetch assignments');
@@ -43,8 +52,50 @@ const AdminHome = () => {
     try {
       await axios.delete(`http://localhost:5000/api/admin/assignments/${assignmentId}`);
       setAssignments(assignments.filter((a) => a._id !== assignmentId));
+      // Clean up remark states
+      const newRemarkStates = { ...remarkStates };
+      delete newRemarkStates[assignmentId];
+      setRemarkStates(newRemarkStates);
     } catch (error) {
       alert('Failed to delete assignment');
+    }
+  };
+
+  const handleRemarkChange = (assignmentId, value) => {
+    setRemarkStates(prev => ({
+      ...prev,
+      [assignmentId]: value
+    }));
+  };
+
+  const submitRemark = async (assignmentId) => {
+    const remark = remarkStates[assignmentId] || '';
+    
+    setSubmittingRemarks(prev => ({
+      ...prev,
+      [assignmentId]: true
+    }));
+
+    try {
+      await axios.patch(`http://localhost:5000/api/admin/assignments/${assignmentId}/remark`, {
+        remark
+      });
+      
+      setAssignments((prev) =>
+        prev.map((item) =>
+          item._id === assignmentId ? { ...item, remarks: remark } : item
+        )
+      );
+      
+      // Show success feedback
+      alert('Remark saved successfully!');
+    } catch (err) {
+      alert('Failed to save remark');
+    } finally {
+      setSubmittingRemarks(prev => ({
+        ...prev,
+        [assignmentId]: false
+      }));
     }
   };
 
@@ -53,9 +104,7 @@ const AdminHome = () => {
       <div className="w-full max-w-5xl bg-white rounded-lg shadow-lg p-8 lg:p-10">
         <div className="text-center mb-10">
           <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
+            <Shield className="w-8 h-8 text-white" />
           </div>
           <h1 className="text-4xl font-extrabold text-gray-900 mb-3">All Submitted Assignments</h1>
           <p className="text-gray-500 text-base">Manage and review student assignments with ease</p>
@@ -63,7 +112,7 @@ const AdminHome = () => {
 
         {loading ? (
           <div className="flex justify-center items-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-600"></div>
+            <Loader className="animate-spin h-12 w-12 text-blue-600" />
           </div>
         ) : assignments.length === 0 ? (
           <p className="text-center text-gray-500 text-lg font-medium">No assignments available.</p>
@@ -92,39 +141,37 @@ const AdminHome = () => {
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium text-sm hover:underline transition-colors duration-200 mb-4"
                 >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
+                  <FileText className="w-5 h-5" />
                   View PDF
                 </a>
                 <textarea
                   rows={3}
                   placeholder="Add a remark..."
-                  defaultValue={a.remarks}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-lg bg-gray-50 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 resize-y"
-                  onBlur={async (e) => {
-                    const remark = e.target.value;
-                    try {
-                      await axios.patch(`http://localhost:5000/api/admin/assignments/${a._id}/remark`, {
-                        remark
-                      });
-                      setAssignments((prev) =>
-                        prev.map((item) =>
-                          item._id === a._id ? { ...item, remarks: remark } : item
-                        )
-                      );
-                    } catch (err) {
-                      alert('Failed to save remark');
-                    }
-                  }}
+                  value={remarkStates[a._id] || ''}
+                  onChange={(e) => handleRemarkChange(a._id, e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-200 rounded-lg bg-gray-50 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 resize-y mb-3"
                 />
-                <button
-                  onClick={() => handleDelete(a._id)}
-                  className="text-red-500 hover:text-red-700"
-                  title="Delete Assignment"
-                >
-                  <img className='w-5 h-5' src={deleteIcon} alt="delete" />
-                </button>
+                <div className="flex items-center justify-between">
+                  <button
+                    onClick={() => submitRemark(a._id)}
+                    disabled={submittingRemarks[a._id]}
+                    className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg font-medium text-sm hover:bg-green-700 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {submittingRemarks[a._id] ? (
+                      <Loader className="w-4 h-4 animate-spin" />
+                    ) : (
+                      <Send className="w-4 h-4" />
+                    )}
+                    {submittingRemarks[a._id] ? 'Saving...' : 'Save Remark'}
+                  </button>
+                  <button
+                    onClick={() => handleDelete(a._id)}
+                    className="text-red-500 hover:text-red-700 transition-colors duration-200"
+                    title="Delete Assignment"
+                  >
+                    <Trash2 className="w-5 h-5" />
+                  </button>
+                </div>
               </div>
             ))}
           </div>

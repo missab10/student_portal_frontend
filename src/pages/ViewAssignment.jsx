@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { ClipboardList, FileText, Edit, Home } from 'lucide-react';
 import DecryptedText from '../components/DecryptedText';
 
 const ViewAssignments = () => {
@@ -44,20 +45,18 @@ const ViewAssignments = () => {
       <div className="w-full max-w-md sm:max-w-lg md:max-w-2xl bg-white rounded-lg shadow-lg p-8 border border-gray-200">
         <div className="text-center mb-8">
           <div className="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-            </svg>
+            <ClipboardList className="w-7 h-7 text-white" />
           </div>
 
           {/* Example 3: Animate on view (runs once) */}
-<div style={{ marginTop: '4rem' }}>
-<DecryptedText
-className="text-3xl font-bold text-gray-900 mb-2"
-  text="Your Assignments"
-  animateOn="view"
-  revealDirection="center"
-/>
-</div>
+          <div style={{ marginTop: '4rem' }}>
+            <DecryptedText
+              className="text-3xl font-bold text-gray-900 mb-2"
+              text="Your Assignments"
+              animateOn="view"
+              revealDirection="center"
+            />
+          </div>
           <p className="text-gray-600 text-sm">View all your submitted assignments</p>
         </div>
 
@@ -82,9 +81,7 @@ className="text-3xl font-bold text-gray-900 mb-2"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium text-sm hover:underline transition-colors duration-200"
                 >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
+                  <FileText className="w-5 h-5" />
                   View PDF
                 </a>
                 <p className="text-gray-500 text-sm mt-2">
@@ -93,9 +90,7 @@ className="text-3xl font-bold text-gray-900 mb-2"
                 {assignment.remarks && (
                   <p className="text-green-700 text-sm mt-2 italic">
                     <span className="flex items-center gap-2">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                      </svg>
+                      <Edit className="w-4 h-4" />
                       Remark: {assignment.remarks}
                     </span>
                   </p>
@@ -114,18 +109,11 @@ className="text-3xl font-bold text-gray-900 mb-2"
             onClick={handleBackToHome}
             className="flex items-center justify-center gap-2 w-full sm:w-auto bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold text-lg shadow-md hover:bg-blue-700 transition-all duration-300 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-            </svg>
+            <Home className="w-5 h-5" />
             Back to Home
           </button>
         </div>
       </div>
-
-
-
-
-
     </div>
   );
 };

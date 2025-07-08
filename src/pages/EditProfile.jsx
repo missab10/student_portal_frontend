@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { Edit, Loader } from 'lucide-react';
 
 const EditProfile = () => {
   const [student, setStudent] = useState(null);
@@ -101,7 +102,7 @@ const EditProfile = () => {
   if (!student) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500"></div>
+        <Loader className="animate-spin h-12 w-12 text-blue-500" />
       </div>
     );
   }
@@ -112,9 +113,7 @@ const EditProfile = () => {
         <div className="bg-white rounded-lg shadow-lg p-8 border border-gray-200">
           <div className="text-center mb-8">
             <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-              </svg>
+              <Edit className="w-8 h-8 text-white" />
             </div>
             <h2 className="text-3xl font-bold text-gray-900 mb-2">Edit Profile</h2>
             <p className="text-gray-600 text-sm">Update your account information</p>

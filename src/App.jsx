@@ -12,6 +12,7 @@ import Profile from './pages/Profile';
 import EditProfile from './pages/EditProfile';
 import AddNotice from './pages/AddNotice';
 import ViewNotices from './pages/ViewNotices';
+
 import NoticeListAdmin from './pages/NoticeListAdmin';
 function App() {
   return (
