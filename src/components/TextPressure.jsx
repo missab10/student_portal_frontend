@@ -17,6 +17,7 @@ const TextPressure = ({
 
   textColor = '#FFFFFF',
   strokeColor = '#FF0000',
+  strokeWidth = 2,
   className = '',
 
   minFontSize = 24,
@@ -97,7 +98,7 @@ const TextPressure = ({
     setSize();
     window.addEventListener('resize', setSize);
     return () => window.removeEventListener('resize', setSize);
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scale, text]);
 
   useEffect(() => {
@@ -143,19 +144,10 @@ const TextPressure = ({
     return () => cancelAnimationFrame(rafId);
   }, [width, weight, italic, alpha, chars.length]);
 
-  const dynamicClassName = [className, flex ? 'flex' : '', stroke ? 'stroke' : '']
-    .filter(Boolean)
-    .join(' ');
-
   return (
     <div
       ref={containerRef}
-      style={{
-        position: 'relative',
-        width: '100%',
-        height: '100%',
-        background: 'transparent',
-      }}
+      className="relative w-full h-full overflow-hidden bg-transparent"
     >
       <style>{`
         @font-face {
@@ -163,12 +155,6 @@ const TextPressure = ({
           src: url('${fontUrl}');
           font-style: normal;
         }
-
-        .flex {
-          display: flex;
-          justify-content: space-between;
-        }
-
         .stroke span {
           position: relative;
           color: ${textColor};
@@ -180,31 +166,24 @@ const TextPressure = ({
           top: 0;
           color: transparent;
           z-index: -1;
-          -webkit-text-stroke-width: 3px;
+          -webkit-text-stroke-width: ${strokeWidth}px;
           -webkit-text-stroke-color: ${strokeColor};
-        }
-
-        .text-pressure-title {
-          color: ${textColor};
         }
       `}</style>
 
       <h1
         ref={titleRef}
-        className={`text-pressure-title ${dynamicClassName}`}
+        className={`text-pressure-title ${className} ${flex ? 'flex justify-between' : ''
+          } ${stroke ? 'stroke' : ''} uppercase text-center`}
         style={{
           fontFamily,
-          textTransform: 'uppercase',
           fontSize: fontSize,
           lineHeight,
           transform: `scale(1, ${scaleY})`,
           transformOrigin: 'center top',
           margin: 0,
-          textAlign: 'center',
-          userSelect: 'none',
-          whiteSpace: 'nowrap',
           fontWeight: 100,
-          width: '100%',
+          color: stroke ? undefined : textColor,
         }}
       >
         {chars.map((char, i) => (
@@ -212,10 +191,7 @@ const TextPressure = ({
             key={i}
             ref={(el) => (spansRef.current[i] = el)}
             data-char={char}
-            style={{
-              display: 'inline-block',
-              color: stroke ? undefined : textColor
-            }}
+            className="inline-block"
           >
             {char}
           </span>

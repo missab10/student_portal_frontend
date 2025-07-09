@@ -15,6 +15,7 @@ import ViewNotices from './pages/ViewNotices';
 import { SmoothCursor } from "@/components/ui/smooth-cursor";
 import NoticeListAdmin from './pages/NoticeListAdmin';
 
+
 const Layout = ({ children }) => {
   const location = useLocation();
   const hideNavbarPaths = ['/', '/register', '/admin-login'];

@@ -22,6 +22,7 @@ const StudentHome = () => {
   };
 
   return (
+    <>
     <div className="min-h-screen bg-gradient-to-b from-slate-900 to-blue-900 flex flex-col items-center justify-center p-4 sm:p-6 lg:ml-64 transition-all duration-300">
       <div className="w-full max-w-4xl bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-12 lg:p-16 border border-white/20">
         <div className="text-center mb-12 flex flex-col items-center justify-center">
@@ -72,6 +73,8 @@ const StudentHome = () => {
         </div>
       </div>
     </div>
+    </>
+
   );
 };
 
