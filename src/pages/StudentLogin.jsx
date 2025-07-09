@@ -1,50 +1,67 @@
-import { useState } from 'react';
-import axios from 'axios';
-import { useNavigate, Link } from 'react-router-dom';
-import { LogIn, Mail, Lock } from 'lucide-react';
-import DecryptedText from '../components/DecryptedText';
-import LoginButton from '../components/LoginButton';
+import { useState } from "react";
+import axios from "axios";
+import { useNavigate, Link } from "react-router-dom";
+import { LogIn, Mail, Lock } from "lucide-react";
+import DecryptedText from "../components/DecryptedText";
+import LoginButton from "../components/LoginButton";
+import Lottie from "lottie-react";
+import login from "../assets/login.json";
 
 const Login = () => {
-  const [formData, setFormData] = useState({ email: '', password: '' });
-  const [message, setMessage] = useState('');
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5000/api/students/login', formData);
+      const res = await axios.post(
+        "http://localhost:5000/api/students/login",
+        formData
+      );
       setMessage(res.data.message);
-      localStorage.setItem('studentId', res.data.student.id);
-      localStorage.setItem('email', res.data.student.email);
-      localStorage.setItem('fullName', res.data.student.fullName);
+      localStorage.setItem("studentId", res.data.student.id);
+      localStorage.setItem("email", res.data.student.email);
+      localStorage.setItem("fullName", res.data.student.fullName);
       setTimeout(() => {
-        navigate('/student-home');
+        navigate("/student-home");
       }, 1500);
     } catch (err) {
-      setMessage(err.response?.data?.message || 'Login failed');
+      setMessage(err.response?.data?.message || "Login failed");
     }
   };
 
   return (
-    <div className="bg-cover bg-center" style={{ backgroundImage: "url('https://via.placeholder.com/1920x1080')" }}>
+    <div
+      className="bg-cover bg-center"
+      style={{
+        backgroundImage: "url('https://via.placeholder.com/1920x1080')",
+      }}
+    >
       <div className="min-h-screen bg-gradient-to-b from-slate-900/80 to-blue-900/80 flex items-center justify-center transition-all duration-300">
         <div className="w-full max-w-sm bg-white/10 backdrop-blur-lg rounded-xl shadow-xl p-6 border border-white/20">
           <div className="text-center mb-4">
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-2 shadow-md">
-              <LogIn className="w-5 h-5 text-white" />
-            </div>
+            {/* <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-2 shadow-md">
+                <LogIn className="w-5 h-5 text-white" />
+              </div> */}
+            <div className="mx-auto mb-2 " style={{ width: '150px', height: '150px' }}>
+  <Lottie animationData={login} loop={true} />
+</div>
+
+
             <DecryptedText
               className="text-2xl font-bold text-white bg-clip-text bg-gradient-to-r from-white to-blue-200"
               text="Student Login"
               animateOn="view"
               revealDirection="center"
             />
-            <p className="text-blue-200 text-xs mt-1 opacity-75">Sign in to your student account</p>
+            <p className="text-blue-200 text-xs mt-1 opacity-75">
+              Sign in to your student account
+            </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -111,9 +128,9 @@ const Login = () => {
           {message && (
             <div
               className={`mt-4 p-3 rounded-lg text-center text-sm font-medium ${
-                message.includes('failed')
-                  ? 'bg-red-500/20 text-red-200 border border-red-500/30'
-                  : 'bg-green-500/20 text-green-200 border border-green-500/30'
+                message.includes("failed")
+                  ? "bg-red-500/20 text-red-200 border border-red-500/30"
+                  : "bg-green-500/20 text-green-200 border border-green-500/30"
               }`}
             >
               {message}
@@ -125,7 +142,8 @@ const Login = () => {
               to="/register"
               className="text-blue-400 hover:text-blue-300 text-sm font-medium hover:underline transition-colors duration-200"
             >
-              Don't have an account? <span className="font-semibold">Register here</span>
+              Don't have an account?{" "}
+              <span className="font-semibold">Register here</span>
             </Link>
           </div>
 
