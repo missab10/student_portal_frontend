@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { Shield, Mail, Lock } from 'lucide-react';
 import DecryptedText from '../components/DecryptedText';
 import LoginButton from '../components/LoginButton';
+import Lottie from "lottie-react";
+import admin from "../assets/admin.json";
 
 const AdminLogin = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -31,9 +33,12 @@ const AdminLogin = () => {
 
       <div className="w-full max-w-sm bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-8 border border-white/20">
         <div className="text-center mb-8">
-          <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+          {/* <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
             <Shield className="w-7 h-7 text-white" />
-          </div>
+          </div> */}
+                      <div className="mx-auto mb-2 " style={{ width: '150px', height: '150px' }}>
+  <Lottie animationData={admin} loop={true} />
+</div>
           <DecryptedText
             className="text-3xl font-bold text-white bg-clip-text bg-gradient-to-r from-white to-blue-200"
             text="Admin Login"

@@ -194,11 +194,9 @@ const Navbar = () => {
                 aria-expanded={isSidebarOpen}
               >
                 <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full flex items-center justify-center shadow-lg">
-                  <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full flex items-center justify-center shadow-lg">
                   <span className="text-white font-bold">
                     {isAdmin ? 'A' : email ? email.charAt(0).toUpperCase() : 'U'}
                   </span>
-                  </div>
                 </div>
                 <div className="flex-1 text-left">
                   <p className="text-sm font-medium truncate">
@@ -209,7 +207,7 @@ const Navbar = () => {
                   </p>
                 </div>
                 <ChevronDown
-                  className={`w-4 h-4 text-w transition-transform duration-300 ${
+                  className={`w-4 h-4 text-blue-300 transition-transform duration-300 ${
                     isSidebarOpen ? 'rotate-180' : ''
                   }`}
                 />
