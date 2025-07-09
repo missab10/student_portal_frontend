@@ -4,6 +4,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import { User, Mail, Calendar, Phone, Lock } from 'lucide-react';
 import DecryptedText from '../components/DecryptedText';
 import LoginButton from '../components/LoginButton';
+import Lottie from "lottie-react";
+import login from "../assets/login.json";
 
 const StudentForm = () => {
   const [formData, setFormData] = useState({
@@ -45,9 +47,12 @@ const StudentForm = () => {
       <div className="min-h-screen bg-gradient-to-b from-slate-900/80 to-blue-900/80 flex items-center justify-center transition-all duration-300">
         <div className="w-full max-w-sm bg-white/10 backdrop-blur-lg rounded-xl shadow-xl p-6 border border-white/20">
           <div className="text-center mb-4">
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-2 shadow-md">
+            {/* <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-2 shadow-md">
               <User className="w-5 h-5 text-white" />
-            </div>
+            </div> */}
+                        <div className="mx-auto mb-2 " style={{ width: '150px', height: '150px' }}>
+  <Lottie animationData={login} loop={true} />
+</div>
             <DecryptedText
               className="text-2xl font-bold text-white bg-clip-text bg-gradient-to-r from-white to-blue-200"
               text="Student Registration"
