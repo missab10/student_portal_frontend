@@ -20,7 +20,6 @@ const LoginButton = ({ text = "Login", type = "button", onClick }) => {
           overflow: hidden;
           font-family: "Raleway", sans-serif;
           font-weight: bold;
-          cursor: pointer;
         }
 
         .neon-button:hover {

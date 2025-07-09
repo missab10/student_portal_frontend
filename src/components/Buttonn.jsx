@@ -17,7 +17,6 @@ const Buttonn = ({ children, onClick, disabled, className = '' }) => {
           outline: none;
           border: none;
           transition: color 0.5s;
-          cursor: pointer;
           border-radius: 30px;
         }
 
