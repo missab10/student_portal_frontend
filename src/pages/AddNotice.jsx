@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Loader, Bell } from 'lucide-react';
+import { Loader, Bell, Upload, FileText, Image as ImageIcon, Send } from 'lucide-react';
 import DecryptedText from '../components/DecryptedText';
-import Buttonn from '../components/Buttonn';
+import Buttonn from '../components/Buttonn';  
 
 const AddNotice = () => {
   const [title, setTitle] = useState('');
@@ -30,7 +30,13 @@ const AddNotice = () => {
     if (file) formData.append('file', file);
 
     try {
-      await axios.post('http://localhost:5000/api/admin/add', formData);
+      // await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/admin/add`, formData  );
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/admin/add`, formData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('adminToken')}`,
+        },
+      });
+      
       setMessage('Notice added successfully!');
       setTitle('');
       setDescription('');
@@ -50,117 +56,135 @@ const AddNotice = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 to-blue-900 flex flex-col items-center justify-start p-4 sm:p-6 lg:p-8 lg:ml-64 transition-all duration-300">
-      <div className="w-full max-w-3xl bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-8 lg:p-10 border border-white/20">
-        <div className="text-center mb-10">
-          <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-            <Bell className="w-8 h-8 text-white" />
+    <div className="min-h-screen bg-gray-50 p-6">
+      <div className="w-full max-w-3xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+            <Bell className="w-6 h-6 text-blue-600" />
           </div>
           <DecryptedText
-            className="text-4xl font-extrabold text-white bg-clip-text bg-gradient-to-r from-white to-blue-200"
+            className="text-3xl font-bold text-gray-900 mb-2"
             text="Add New Notice"
             animateOn="view"
             revealDirection="center"
           />
-          <p className="text-blue-200 text-base mt-2 opacity-75">Create and publish notices for students and faculty</p>
+          <p className="text-gray-600">
+            Create and publish notices for students and faculty
+          </p>
         </div>
 
-        {message && (
-          <div
-            className={`mb-6 p-4 rounded-xl font-medium text-center ${
-              message.includes('successfully')
-                ? 'bg-green-500/20 border border-green-500/30 text-green-200'
-                : 'bg-red-500/20 border border-red-500/30 text-red-200'
-            }`}
-          >
-            {message}
-          </div>
-        )}
-
-        <form onSubmit={handleSubmit} encType="multipart/form-data" className="space-y-6">
-          <div>
-            <label className="block text-sm font-semibold text-gray-300 mb-2">
-              Notice Title *
-            </label>
-            <input
-              type="text"
-              className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
-              placeholder="Enter notice title..."
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold text-gray-300 mb-2">
-              Description
-            </label>
-            <textarea
-              className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 resize-y"
-              placeholder="Enter notice description..."
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              rows="4"
-            />
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-2">
-            <div>
-              <label className="block text-sm font-semibold text-gray-300 mb-2">
-                Upload Image
-              </label>
-              <input
-                id="image-input"
-                type="file"
-                accept="image/*"
-                onChange={(e) => setImage(e.target.files[0])}
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white file:mr-3 file:py-2 file:px-3 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-blue-500 file:text-white hover:file:bg-blue-400 transition-all duration-300"
-              />
-              <div className="text-xs text-gray-400 mt-2">
-                JPG, PNG, GIF up to 10MB
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-semibold text-gray-300 mb-2">
-                Upload File
-              </label>
-              <input
-                id="file-input"
-                type="file"
-                accept=".pdf,.xlsx,.xls"
-                onChange={(e) => setFile(e.target.files[0])}
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white file:mr-3 file:py-2 file:px-3 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-blue-500 file:text-white hover:file:bg-blue-400 transition-all duration-300"
-              />
-              <div className="text-xs text-gray-400 mt-2">
-                PDF, Excel files only
-              </div>
-            </div>
-          </div>
-
-          <div className="flex justify-center pt-6">
-            <Buttonn
-              type="submit"
-              disabled={loading || !title}
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 disabled:bg-gray-500/50 disabled:cursor-not-allowed text-white font-semibold px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900"
+        {/* Form Container */}
+        <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-8">
+          {message && (
+            <div
+              className={`mb-6 p-4 rounded-lg font-medium text-center ${
+                message.includes('successfully')
+                  ? 'bg-green-50 border border-green-200 text-green-800'
+                  : 'bg-red-50 border border-red-200 text-red-800'
+              }`}
             >
-              {loading ? (
-                <>
-                  <Loader className="w-5 h-5 animate-spin" />
-                  Publishing...
-                </>
-              ) : (
-                <>
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                  </svg>
-                  Publish Notice
-                </>
-              )}
-            </Buttonn>
-          </div>
-        </form>
+              {message}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} encType="multipart/form-data" className="space-y-6">
+            {/* Title Field */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Notice Title *
+              </label>
+              <input
+                type="text"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                placeholder="Enter notice title..."
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                required
+              />
+            </div>
+
+            {/* Description Field */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Description
+              </label>
+              <textarea
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-y"
+                placeholder="Enter notice description..."
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                rows="4"
+              />
+            </div>
+
+            {/* File Upload Section */}
+            <div className="grid gap-6 md:grid-cols-2">
+              {/* Image Upload */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <ImageIcon className="w-4 h-4 inline mr-2" />
+                  Upload Image
+                </label>
+                <div className="relative">
+                  <input
+                    id="image-input"
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => setImage(e.target.files[0])}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors file:mr-3 file:py-2 file:px-3 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-blue-600 file:text-white hover:file:bg-blue-700"
+                  />
+                  <Upload className="absolute right-3 top-3 w-5 h-5 text-gray-400 pointer-events-none" />
+                </div>
+                <p className="text-xs text-gray-500 mt-2">
+                  JPG, PNG, GIF up to 10MB
+                </p>
+              </div>
+
+              {/* File Upload */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <FileText className="w-4 h-4 inline mr-2" />
+                  Upload File
+                </label>
+                <div className="relative">
+                  <input
+                    id="file-input"
+                    type="file"
+                    accept=".pdf,.xlsx,.xls"
+                    onChange={(e) => setFile(e.target.files[0])}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors file:mr-3 file:py-2 file:px-3 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-blue-600 file:text-white hover:file:bg-blue-700"
+                  />
+                  <Upload className="absolute right-3 top-3 w-5 h-5 text-gray-400 pointer-events-none" />
+                </div>
+                <p className="text-xs text-gray-500 mt-2">
+                  PDF, Excel files only
+                </p>
+              </div>
+            </div>
+
+            {/* Submit Button */}
+            <div className="flex justify-center pt-6">
+              <Buttonn
+                type="submit"
+                disabled={loading || !title}
+                className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-medium px-8 py-3 rounded-lg shadow-sm hover:shadow-md transition-all duration-200 flex items-center gap-2 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              >
+                {loading ? (
+                  <>
+                    <Loader className="w-5 h-5 animate-spin" />
+                    Publishing...
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-5 h-5" />
+                    Publish Notice
+                  </>
+                )}
+              </Buttonn>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

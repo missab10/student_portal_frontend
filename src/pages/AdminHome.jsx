@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Shield, FileText, Trash2, Loader, Send } from 'lucide-react';
+import { IoShield, IoDocumentText, IoTrash, IoReload, IoSend } from 'react-icons/io5';
 import Buttonn from '../components/Buttonn';
 import DecryptedText from '../components/DecryptedText';
 
@@ -23,7 +23,16 @@ const AdminHome = () => {
 
     const fetchAssignments = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/admin/assignments');
+        // const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/admin/assignments`);
+        const res = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}/api/admin/assignments`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('adminToken')}`,
+            },
+          }
+        );
+        
         setAssignments(res.data);
         
         // Initialize remark states
@@ -48,7 +57,16 @@ const AdminHome = () => {
     if (!confirm) return;
   
     try {
-      await axios.delete(`http://localhost:5000/api/admin/assignments/${assignmentId}`);
+      // await axios.delete(`http://localhost:5000/api/admin/assignments/${assignmentId}`);
+      await axios.delete(
+        `${import.meta.env.VITE_API_BASE_URL}/api/admin/assignments/${assignmentId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('adminToken')}`,
+          },
+        }
+      );
+      
       setAssignments(assignments.filter((a) => a._id !== assignmentId));
       // Clean up remark states
       const newRemarkStates = { ...remarkStates };
@@ -75,9 +93,20 @@ const AdminHome = () => {
     }));
 
     try {
-      await axios.patch(`http://localhost:5000/api/admin/assignments/${assignmentId}/remark`, {
-        remark
-      });
+      // await axios.patch(`http://localhost:5000/api/admin/assignments/${assignmentId}/remark`, {
+      //   remark
+      // });
+      await axios.patch(
+        `${import.meta.env.VITE_API_BASE_URL}/api/admin/assignments/${assignmentId}/remark`,
+        {
+          remark
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('adminToken')}`,
+          },
+        }
+      );
       
       setAssignments((prev) =>
         prev.map((item) =>
@@ -98,53 +127,53 @@ const AdminHome = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 to-blue-900 flex flex-col items-center justify-start p-4 sm:p-6 lg:p-8 lg:ml-64 transition-all duration-300">
-      <div className="w-full max-w-5xl bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-8 lg:p-10 border border-white/20">
+    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-start p-4 sm:p-6 lg:p-8 lg:ml-64 transition-all duration-300">
+      <div className="w-full max-w-5xl bg-white rounded-lg shadow-sm border border-gray-200 p-8 lg:p-10">
         <div className="text-center mb-10">
-          <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-            <Shield className="w-8 h-8 text-white" />
+          <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+            <IoShield className="w-8 h-8 text-white" />
           </div>
           <DecryptedText
-            className="text-4xl font-extrabold text-white bg-clip-text bg-gradient-to-r from-white to-blue-200"
+            className="text-3xl font-semibold text-gray-900"
             text="All Submitted Assignments"
             animateOn="view"
             revealDirection="center"
           />
-          <p className="text-blue-200 text-base mt-2 opacity-75">Manage and review student assignments with ease</p>
+          <p className="text-gray-600 text-base mt-2">Manage and review student assignments with ease</p>
         </div>
 
         {loading ? (
           <div className="flex justify-center items-center py-12">
-            <Loader className="animate-spin h-12 w-12 text-blue-400" />
+            <IoReload className="animate-spin h-12 w-12 text-blue-600" />
           </div>
         ) : assignments.length === 0 ? (
-          <p className="text-center text-blue-200 text-lg font-medium opacity-75">No assignments available.</p>
+          <p className="text-center text-gray-500 text-lg font-medium">No assignments available.</p>
         ) : (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {assignments.map((a) => (
               <div
                 key={a._id}
-                className="bg-white/5 border border-white/20 rounded-xl p-6 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
+                className="bg-gray-50 border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow duration-200"
               >
-                <h3 className="text-xl font-semibold text-white mb-3">{a.title}</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">{a.title}</h3>
                 {a.description && (
-                  <p className="text-gray-300 text-sm mb-4 line-clamp-3">{a.description}</p>
+                  <p className="text-gray-600 text-sm mb-4 line-clamp-3">{a.description}</p>
                 )}
-                <div className="text-gray-400 text-sm mb-2">
+                <div className="text-gray-500 text-sm mb-2">
                   <span className="font-medium">Submitted by:</span>{' '}
                   {a.studentId?.fullName || 'Unknown'} ({a.studentId?.email || '-'})
                 </div>
-                <div className="text-gray-400 text-sm mb-4">
+                <div className="text-gray-500 text-sm mb-4">
                   <span className="font-medium">Submitted on:</span>{' '}
                   {new Date(a.createdAt).toLocaleString()}
                 </div>
                 <a
-                  href={`http://localhost:5000/${a.pdf}`}
+                  href={`${import.meta.env.VITE_API_BASE_URL}/${a.pdf}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-blue-400 hover:text-blue-300 font-medium text-sm hover:underline transition-colors duration-200 mb-4"
+                  className="flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium text-sm hover:underline transition-colors duration-200 mb-4"
                 >
-                  <FileText className="w-5 h-5" />
+                  <IoDocumentText className="w-5 h-5" />
                   View PDF
                 </a>
                 <textarea
@@ -152,27 +181,27 @@ const AdminHome = () => {
                   placeholder="Add a remark..."
                   value={remarkStates[a._id] || ''}
                   onChange={(e) => handleRemarkChange(a._id, e.target.value)}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 resize-y mb-3"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-y mb-3"
                 />
                 <div className="flex items-center justify-between">
                   <Buttonn
                     onClick={() => submitRemark(a._id)}
                     disabled={submittingRemarks[a._id]}
-                    className="flex items-center gap-2 bg-gradient-to-r from-green-600 to-green-500 text-white px-4 py-2 rounded-xl font-medium text-sm hover:from-green-500 hover:to-green-400 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-slate-900"
+                    className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg font-medium text-sm hover:bg-green-700 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
                   >
                     {submittingRemarks[a._id] ? (
-                      <Loader className="w-4 h-4 animate-spin" />
+                      <IoReload className="w-4 h-4 animate-spin" />
                     ) : (
-                      <Send className="w-4 h-4" />
+                      <IoSend className="w-4 h-4" />
                     )}
                     {submittingRemarks[a._id] ? 'Saving...' : 'Save Remark'}
                   </Buttonn>
                   <button
                     onClick={() => handleDelete(a._id)}
-                    className="text-red-400 hover:text-red-300 transition-colors duration-200"
+                    className="text-red-600 hover:text-red-800 transition-colors duration-200"
                     title="Delete Assignment"
                   >
-                    <Trash2 className="w-5 h-5" />
+                    <IoTrash className="w-5 h-5" />
                   </button>
                 </div>
               </div>
@@ -180,7 +209,7 @@ const AdminHome = () => {
           </div>
         )}
         {message && (
-          <div className="mt-8 bg-red-500/20 border border-red-500/30 text-red-200 text-center rounded-xl p-4 font-medium">
+          <div className="mt-8 bg-red-50 border border-red-200 text-red-800 text-center rounded-lg p-4 font-medium">
             {message}
           </div>
         )}

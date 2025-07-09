@@ -199,7 +199,7 @@ export default function DecryptedText({
           return (
             <span
               key={index}
-              className={`${isRevealedOrDone ? className : encryptedClassName} text-white`}
+              className={`${isRevealedOrDone ? className : encryptedClassName}`}
             >
               {char}
             </span>

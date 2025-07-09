@@ -1,3 +1,264 @@
+// import { useState, useCallback } from 'react';
+// import { Link, useNavigate } from 'react-router-dom';
+// import {
+//   BookOpen,
+//   Menu,
+//   X,
+//   LogOut,
+//   LogIn,
+//   Home,
+//   Plus,
+//   FileText,
+//   User,
+//   Bell,
+//   Users,
+//   FolderOpen,
+//   ChevronDown,
+//   Search
+// } from 'lucide-react';
+
+// const Navbar = () => {
+//   const navigate = useNavigate();
+
+//   const isAdmin = localStorage.getItem('isAdmin') === 'true';
+//   const studentId = localStorage.getItem('studentId');
+//   const email = localStorage.getItem('email') || '';
+//   console.log('Sidebar email:', email);
+
+//   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+//   const handleLogout = useCallback(() => {
+//     localStorage.removeItem('isAdmin');
+//     localStorage.removeItem('studentId');
+//     localStorage.removeItem('email');
+//     setIsSidebarOpen(false);
+//     navigate(isAdmin ? '/' : '/');
+//   }, [isAdmin, navigate]);
+
+//   const toggleSidebar = useCallback(() => {
+//     setIsSidebarOpen((prev) => !prev);
+//   }, []);
+
+//   const settings = isAdmin ? ['Logout'] : ['Profile', 'Logout'];
+
+//   return (
+//     <>
+//       {/* Mobile Toggle Button */}
+//       <button
+//         className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-gray-800 text-white rounded hover:bg-gray-700"
+//         onClick={toggleSidebar}
+//         aria-label={isSidebarOpen ? 'Close sidebar' : 'Open sidebar'}
+//         aria-expanded={isSidebarOpen}
+//       >
+//         {isSidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+//       </button>
+
+//       {/* Sidebar */}
+//       <nav
+//         className={`fixed top-0 left-0 h-full w-64 bg-white border-r border-gray-200 shadow-sm z-40 transform transition-transform duration-300 ${
+//           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+//         } lg:translate-x-0`}
+//       >
+//         <div className="flex flex-col h-full p-4">
+//           {/* Logo Section */}
+//           <Link
+//             to={isAdmin ? '/admin-home' : '/student-home'}
+//             className="flex items-center gap-3 mb-6 p-2 hover:bg-gray-50 rounded"
+//             onClick={() => setIsSidebarOpen(false)}
+//           >
+//             <div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center">
+//               <BookOpen className="w-5 h-5 text-white" />
+//             </div>
+//             <div>
+//               <h1 className="text-lg font-semibold text-gray-900">
+//                 {isAdmin ? 'Admin Portal' : 'Student Portal'}
+//               </h1>
+//               <p className="text-xs text-gray-500">
+//                 {isAdmin ? 'Management Dashboard' : 'Learning Hub'}
+//               </p>
+//             </div>
+//           </Link>
+
+//           {/* Search Bar */}
+//           <div className="mb-6 relative">
+//             <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+//             <input
+//               type="text"
+//               placeholder="Search..."
+//               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+//             />
+//           </div>
+
+//           {/* Navigation Menu */}
+//           <ul className="flex-1 space-y-1">
+//             {isAdmin ? (
+//               <>
+//                 <li>
+//                   <Link
+//                     to="/admin-home"
+//                     className="flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded"
+//                     onClick={() => setIsSidebarOpen(false)}
+//                   >
+//                     <FolderOpen className="w-4 h-4" />
+//                     <span className="text-sm">All Assignments</span>
+//                   </Link>
+//                 </li>
+//                 <li>
+//                   <Link
+//                     to="/admin-users"
+//                     className="flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded"
+//                     onClick={() => setIsSidebarOpen(false)}
+//                   >
+//                     <Users className="w-4 h-4" />
+//                     <span className="text-sm">View Users</span>
+//                   </Link>
+//                 </li>
+//                 <li>
+//                   <Link
+//                     to="/add-notice"
+//                     className="flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded"
+//                     onClick={() => setIsSidebarOpen(false)}
+//                   >
+//                     <Plus className="w-4 h-4" />
+//                     <span className="text-sm">Add Notice</span>
+//                   </Link>
+//                 </li>
+//                 <li>
+//                   <Link
+//                     to="/notice-list-admin"
+//                     className="flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded"
+//                     onClick={() => setIsSidebarOpen(false)}
+//                   >
+//                     <Bell className="w-4 h-4" />
+//                     <span className="text-sm">View Notices</span>
+//                   </Link>
+//                 </li>
+//               </>
+//             ) : studentId ? (
+//               <>
+//                 <li>
+//                   <Link
+//                     to="/add-assignment"
+//                     className="flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded"
+//                     onClick={() => setIsSidebarOpen(false)}
+//                   >
+//                     <Plus className="w-4 h-4" />
+//                     <span className="text-sm">Add Assignment</span>
+//                   </Link>
+//                 </li>
+//                 <li>
+//                   <Link
+//                     to="/view-assignments"
+//                     className="flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded"
+//                     onClick={() => setIsSidebarOpen(false)}
+//                   >
+//                     <FileText className="w-4 h-4" />
+//                     <span className="text-sm">View Assignments</span>
+//                   </Link>
+//                 </li>
+//                 <li>
+//                   <Link
+//                     to="/view-notices"
+//                     className="flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded"
+//                     onClick={() => setIsSidebarOpen(false)}
+//                   >
+//                     <Bell className="w-4 h-4" />
+//                     <span className="text-sm">View Notices</span>
+//                   </Link>
+//                 </li>
+//               </>
+//             ) : (
+//               <li>
+//                 <button
+//                   onClick={handleLogout}
+//                   className="flex items-center gap-3 px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 w-full text-left"
+//                   aria-label="Login"
+//                 >
+//                   <LogIn className="w-4 h-4" />
+//                   <span className="text-sm">Login</span>
+//                 </button>
+//               </li>
+//             )}
+//           </ul>
+
+//           {/* User Menu */}
+//           {(isAdmin || studentId) && (
+//             <div className="mt-auto border-t border-gray-200 pt-4">
+//               <button
+//                 className="flex items-center gap-3 px-3 py-2 hover:bg-gray-100 rounded w-full text-left"
+//                 onClick={toggleSidebar}
+//                 aria-label="User settings"
+//                 aria-expanded={isSidebarOpen}
+//               >
+//                 <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+//                   <span className="text-white text-sm font-medium">
+//                     {isAdmin ? 'A' : email ? email.charAt(0).toUpperCase() : 'U'}
+//                   </span>
+//                 </div>
+//                 <div className="flex-1 text-left">
+//                   <p className="text-sm font-medium text-gray-900 truncate">
+//                     {isAdmin ? 'Administrator' : email}
+//                   </p>
+//                   <p className="text-xs text-gray-500">
+//                     {isAdmin ? 'System Admin' : 'Student'}
+//                   </p>
+//                 </div>
+//                 <ChevronDown
+//                   className={`w-4 h-4 text-gray-400 transition-transform duration-300 ${
+//                     isSidebarOpen ? 'rotate-180' : ''
+//                   }`}
+//                 />
+//               </button>
+
+//               {/* User Dropdown */}
+//               {isSidebarOpen && (
+//                 <ul className="mt-2 bg-white border border-gray-200 rounded shadow-lg py-1">
+//                   <div className="px-4 py-3 border-b border-gray-200">
+//                     <p className="text-sm font-medium text-gray-900 truncate">
+//                       {isAdmin ? 'Administrator' : email}
+//                     </p>
+//                     <p className="text-xs text-gray-500 truncate">
+//                       {isAdmin ? 'admin@portal.com' : email}
+//                     </p>
+//                   </div>
+//                   {settings.map((setting) => (
+//                     <li key={setting}>
+//                       <Link
+//                           to={setting === 'Logout' ? '/': setting.toLowerCase()}
+//                         className="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-100"
+//                         onClick={() => {
+//                           setIsSidebarOpen(false);
+//                           if (setting === 'Logout') handleLogout();
+//                         }}
+//                       >
+//                         {setting === 'Profile' && (
+//                           <User className="w-4 h-4 text-gray-500" />
+//                         )}
+//                         {setting === 'Logout' && (
+//                           <LogOut className="w-4 h-4 text-gray-500" />
+//                         )}
+//                         <span className="text-sm">
+//                           {setting}
+//                         </span>
+//                       </Link>
+//                     </li>
+//                   ))}
+//                 </ul>
+//               )}
+//             </div>
+//           )}
+//         </div>
+//       </nav>
+
+//       {/* Main Content Shift */}
+//       <div className="lg:ml-64 transition-all duration-300" />
+//     </>
+//   );
+// };
+
+// export default Navbar;
+
+
 import { useState, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
@@ -14,7 +275,8 @@ import {
   Users,
   FolderOpen,
   ChevronDown,
-  Search
+  Search,
+  Settings
 } from 'lucide-react';
 
 const Navbar = () => {
@@ -45,209 +307,216 @@ const Navbar = () => {
     <>
       {/* Mobile Toggle Button */}
       <button
-        className="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 transition-all duration-300 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+        className="lg:hidden fixed top-4 left-4 z-50 p-3 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-50 transition-colors"
         onClick={toggleSidebar}
         aria-label={isSidebarOpen ? 'Close sidebar' : 'Open sidebar'}
         aria-expanded={isSidebarOpen}
       >
-        {isSidebarOpen ? <X className="w-6 h-6 text-white" /> : <Menu className="w-6 h-6 text-white" />}
+        {isSidebarOpen ? <X className="w-5 h-5 text-gray-600" /> : <Menu className="w-5 h-5 text-gray-600" />}
       </button>
 
       {/* Sidebar */}
       <nav
-        className={`fixed top-0 left-0 h-full w-64 bg-gradient-to-b from-slate-900 to-blue-900 backdrop-blur-lg bg-opacity-95 text-white shadow-2xl z-40 border-r border-white/10 transform transition-transform duration-300 ${
+        className={`fixed top-0 left-0 h-full w-64 bg-white border-r border-gray-200 shadow-sm z-40 transform transition-transform duration-300 ${
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         } lg:translate-x-0`}
       >
-        <div className="flex flex-col h-full p-6">
+        <div className="flex flex-col h-full">
           {/* Logo Section */}
-          <Link
-            to={isAdmin ? '/admin-home' : '/student-home'}
-            className="flex items-center gap-3 mb-8 group transition-all duration-300 hover:scale-105"
-            onClick={() => setIsSidebarOpen(false)}
-          >
-            <div className="relative">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-blue-500/25 transition-all duration-300">
-                <BookOpen className="w-6 h-6 text-white" />
+          <div className="p-6 border-b border-gray-100">
+            <Link
+              to={isAdmin ? '/admin-home' : '/student-home'}
+              className="flex items-center gap-3 hover:opacity-80 transition-opacity"
+              onClick={() => setIsSidebarOpen(false)}
+            >
+              <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center shadow-sm">
+                <BookOpen className="w-5 h-5 text-white" />
               </div>
-              <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white animate-pulse"></div>
-            </div>
-            <div>
-              <h1 className="text-xl font-bold bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
-                {isAdmin ? 'Admin Portal' : 'Student Portal'}
-              </h1>
-              <p className="text-xs text-blue-200 opacity-75">
-                {isAdmin ? 'Management Dashboard' : 'Learning Hub'}
-              </p>
-            </div>
-          </Link>
+              <div>
+                <h1 className="text-lg font-semibold text-gray-900">
+                  {isAdmin ? 'Admin Portal' : 'Student Portal'}
+                </h1>
+                <p className="text-xs text-gray-500">
+                  {isAdmin ? 'Management Dashboard' : 'Learning Hub'}
+                </p>
+              </div>
+            </Link>
+          </div>
 
           {/* Search Bar */}
-          <div className="mb-6 relative">
-            <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Search..."
-              className="w-full pl-10 pr-4 py-2 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
-            />
+          <div className="p-4 border-b border-gray-100">
+            <div className="relative">
+              <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Search..."
+                className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+              />
+            </div>
           </div>
 
           {/* Navigation Menu */}
-          <ul className="flex-1 space-y-2">
-            {isAdmin ? (
-              <>
+          <div className="flex-1 p-4">
+            <ul className="space-y-1">
+              {isAdmin ? (
+                <>
+                  <li>
+                    <Link
+                      to="/admin-home"
+                      className="flex items-center gap-3 px-3 py-2.5 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors group"
+                      onClick={() => setIsSidebarOpen(false)}
+                    >
+                      <FolderOpen className="w-4 h-4 text-gray-500 group-hover:text-gray-700" />
+                      <span className="text-sm font-medium">All Assignments</span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/admin-users"
+                      className="flex items-center gap-3 px-3 py-2.5 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors group"
+                      onClick={() => setIsSidebarOpen(false)}
+                    >
+                      <Users className="w-4 h-4 text-gray-500 group-hover:text-gray-700" />
+                      <span className="text-sm font-medium">View Users</span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/add-notice"
+                      className="flex items-center gap-3 px-3 py-2.5 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors group"
+                      onClick={() => setIsSidebarOpen(false)}
+                    >
+                      <Plus className="w-4 h-4 text-gray-500 group-hover:text-gray-700" />
+                      <span className="text-sm font-medium">Add Notice</span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/notice-list-admin"
+                      className="flex items-center gap-3 px-3 py-2.5 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors group"
+                      onClick={() => setIsSidebarOpen(false)}
+                    >
+                      <Bell className="w-4 h-4 text-gray-500 group-hover:text-gray-700" />
+                      <span className="text-sm font-medium">View Notices</span>
+                    </Link>
+                  </li>
+                </>
+              ) : studentId ? (
+                <>
+                  <li>
+                    <Link
+                      to="/add-assignment"
+                      className="flex items-center gap-3 px-3 py-2.5 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors group"
+                      onClick={() => setIsSidebarOpen(false)}
+                    >
+                      <Plus className="w-4 h-4 text-gray-500 group-hover:text-gray-700" />
+                      <span className="text-sm font-medium">Add Assignment</span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/view-assignments"
+                      className="flex items-center gap-3 px-3 py-2.5 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors group"
+                      onClick={() => setIsSidebarOpen(false)}
+                    >
+                      <FileText className="w-4 h-4 text-gray-500 group-hover:text-gray-700" />
+                      <span className="text-sm font-medium">View Assignments</span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/view-notices"
+                      className="flex items-center gap-3 px-3 py-2.5 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors group"
+                      onClick={() => setIsSidebarOpen(false)}
+                    >
+                      <Bell className="w-4 h-4 text-gray-500 group-hover:text-gray-700" />
+                      <span className="text-sm font-medium">View Notices</span>
+                    </Link>
+                  </li>
+                </>
+              ) : (
                 <li>
-                  <Link
-                    to="/admin-home"
-                    className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 transition-all duration-300 group"
-                    onClick={() => setIsSidebarOpen(false)}
+                  <button
+                    onClick={handleLogout}
+                    className="flex items-center gap-3 px-3 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 w-full text-left transition-colors group"
+                    aria-label="Login"
                   >
-                    <FolderOpen className="w-5 h-5 text-blue-300 group-hover:text-white transition-colors" />
-                    <span className="text-sm font-medium group-hover:text-white transition-colors">All Assignments</span>
-                  </Link>
+                    <LogIn className="w-4 h-4" />
+                    <span className="text-sm font-medium">Login</span>
+                  </button>
                 </li>
-                <li>
-                  <Link
-                    to="/admin-users"
-                    className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 transition-all duration-300 group"
-                    onClick={() => setIsSidebarOpen(false)}
-                  >
-                    <Users className="w-5 h-5 text-blue-300 group-hover:text-white transition-colors" />
-                    <span className="text-sm font-medium group-hover:text-white transition-colors">View Users</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/add-notice"
-                    className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 transition-all duration-300 group"
-                    onClick={() => setIsSidebarOpen(false)}
-                  >
-                    <Plus className="w-5 h-5 text-blue-300 group-hover:text-white transition-colors" />
-                    <span className="text-sm font-medium group-hover:text-white transition-colors">Add Notice</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/notice-list-admin"
-                    className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 transition-all duration-300 group"
-                    onClick={() => setIsSidebarOpen(false)}
-                  >
-                    <Bell className="w-5 h-5 text-blue-300 group-hover:text-white transition-colors" />
-                    <span className="text-sm font-medium group-hover:text-white transition-colors">View Notices</span>
-                  </Link>
-                </li>
-              </>
-            ) : studentId ? (
-              <>
-                <li>
-                  <Link
-                    to="/add-assignment"
-                    className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 transition-all duration-300 group"
-                    onClick={() => setIsSidebarOpen(false)}
-                  >
-                    <Plus className="w-5 h-5 text-blue-300 group-hover:text-white transition-colors" />
-                    <span className="text-sm font-medium group-hover:text-white transition-colors">Add Assignment</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/view-assignments"
-                    className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 transition-all duration-300 group"
-                    onClick={() => setIsSidebarOpen(false)}
-                  >
-                    <FileText className="w-5 h-5 text-blue-300 group-hover:text-white transition-colors" />
-                    <span className="text-sm font-medium group-hover:text-white transition-colors">View Assignments</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/view-notices"
-                    className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 transition-all duration-300 group"
-                    onClick={() => setIsSidebarOpen(false)}
-                  >
-                    <Bell className="w-5 h-5 text-blue-300 group-hover:text-white transition-colors" />
-                    <span className="text-sm font-medium group-hover:text-white transition-colors">View Notices</span>
-                  </Link>
-                </li>
-              </>
-            ) : (
-              <li>
-                <button
-                  onClick={handleLogout}
-                  className="flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl hover:from-blue-500 hover:to-purple-500 transition-all duration-300 shadow-lg hover:shadow-blue-500/25 w-full text-left"
-                  aria-label="Login"
-                >
-                  <LogIn className="w-5 h-5" />
-                  <span className="text-sm font-medium">Login</span>
-                </button>
-              </li>
-            )}
-          </ul>
+              )}
+            </ul>
+          </div>
 
           {/* User Menu */}
           {(isAdmin || studentId) && (
-            <div className="mt-auto">
-              <button
-                className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 transition-all duration-300 group w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
-                onClick={toggleSidebar}
-                aria-label="User settings"
-                aria-expanded={isSidebarOpen}
-              >
-                <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full flex items-center justify-center shadow-lg">
-                  <span className="text-white font-bold">
-                    {isAdmin ? 'A' : email ? email.charAt(0).toUpperCase() : 'U'}
-                  </span>
-                </div>
-                <div className="flex-1 text-left">
-                  <p className="text-sm font-medium truncate">
-                    {isAdmin ? 'Administrator' : email}
-                  </p>
-                  <p className="text-xs text-blue-200 opacity-75">
-                    {isAdmin ? 'System Admin' : 'Student'}
-                  </p>
-                </div>
-                <ChevronDown
-                  className={`w-4 h-4 text-blue-300 transition-transform duration-300 ${
-                    isSidebarOpen ? 'rotate-180' : ''
-                  }`}
-                />
-              </button>
-
-              {/* User Dropdown */}
-              {isSidebarOpen && (
-                <ul className="mt-2 bg-white/95 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/20 py-2 text-sm">
-                  <div className="px-4 py-3 border-b border-gray-200">
+            <div className="border-t border-gray-100 p-4">
+              <div className="relative">
+                <button
+                  className="flex items-center gap-3 px-3 py-2.5 hover:bg-gray-50 rounded-lg w-full text-left transition-colors"
+                  onClick={toggleSidebar}
+                  aria-label="User settings"
+                  aria-expanded={isSidebarOpen}
+                >
+                  <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                    <span className="text-white text-sm font-medium">
+                      {isAdmin ? 'A' : email ? email.charAt(0).toUpperCase() : 'U'}
+                    </span>
+                  </div>
+                  <div className="flex-1 text-left min-w-0">
                     <p className="text-sm font-medium text-gray-900 truncate">
                       {isAdmin ? 'Administrator' : email}
                     </p>
-                    <p className="text-xs text-gray-500 truncate">
-                      {isAdmin ? 'admin@portal.com' : email}
+                    <p className="text-xs text-gray-500">
+                      {isAdmin ? 'System Admin' : 'Student'}
                     </p>
                   </div>
-                  {settings.map((setting) => (
-                    <li key={setting}>
-                      <Link
-                          to={setting === 'Logout' ? '/': setting.toLowerCase()}
-                        className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-blue-50 transition-all duration-200 group"
-                        onClick={() => {
-                          setIsSidebarOpen(false);
-                          if (setting === 'Logout') handleLogout();
-                        }}
-                      >
-                        {setting === 'Profile' && (
-                          <User className="w-4 h-4 text-gray-500 group-hover:text-blue-600 transition-colors" />
-                        )}
-                        {setting === 'Logout' && (
-                          <LogOut className="w-4 h-4 text-gray-500 group-hover:text-blue-600 transition-colors" />
-                        )}
-                        <span className="text-sm font-medium group-hover:text-blue-600 transition-colors">
-                          {setting}
-                        </span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              )}
+                  <ChevronDown
+                    className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${
+                      isSidebarOpen ? 'rotate-180' : ''
+                    }`}
+                  />
+                </button>
+
+                {/* User Dropdown */}
+                {isSidebarOpen && (
+                  <div className="absolute bottom-full left-0 right-0 mb-2 bg-white border border-gray-200 rounded-lg shadow-lg py-1">
+                    <div className="px-4 py-3 border-b border-gray-100">
+                      <p className="text-sm font-medium text-gray-900 truncate">
+                        {isAdmin ? 'Administrator' : email}
+                      </p>
+                      <p className="text-xs text-gray-500 truncate">
+                        {isAdmin ? 'admin@portal.com' : email}
+                      </p>
+                    </div>
+                    <ul>
+                      {settings.map((setting) => (
+                        <li key={setting}>
+                          <Link
+                            to={setting === 'Logout' ? '/' : setting.toLowerCase()}
+                            className="flex items-center gap-3 px-4 py-2.5 text-gray-700 hover:bg-gray-50 transition-colors"
+                            onClick={() => {
+                              setIsSidebarOpen(false);
+                              if (setting === 'Logout') handleLogout();
+                            }}
+                          >
+                            {setting === 'Profile' && (
+                              <User className="w-4 h-4 text-gray-500" />
+                            )}
+                            {setting === 'Logout' && (
+                              <LogOut className="w-4 h-4 text-gray-500" />
+                            )}
+                            <span className="text-sm font-medium">
+                              {setting}
+                            </span>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
             </div>
           )}
         </div>

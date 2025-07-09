@@ -22,7 +22,7 @@ const Layout = ({ children }) => {
 
   return (
     <>
-      <SmoothCursor />
+      {/* <SmoothCursor /> */}
       {!hideNavbarPaths.includes(location.pathname) && <Navbar />}
       {children}
     </>
